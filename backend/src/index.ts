@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 
-import userRoutes from './routes/userRoutes'
+import userRoutes from './routes/userRoutes';
+import taskRoutes from './routes/taskRoutes';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get('/test-db', async (req: Request, res: Response) => {
 })
 
 app.use('/api/user', userRoutes);
+app.use('/api/tasks', taskRoutes);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
 
