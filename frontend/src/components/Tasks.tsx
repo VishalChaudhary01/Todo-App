@@ -38,7 +38,7 @@ const Tasks: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <h1 className="font-bold">Tasks loading...</h1>
+        <h2 className="text-4xl font-bold text-center py-3">Tasks loading...</h2>
       ) : (
         tasks?.map((task) => (
           <SingleTask key={task.id} {...task} handleDeleteTask={handleDeleteTask} handleUpdateTask={handleUpdateTask}/>
