@@ -9,6 +9,8 @@ import {
   DELETE_TASK_FAIL,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
+  DELETE_TASK_RESET,
+  RESET_TASK,
   UPDATE_TASK_FAIL,
   UPDATE_TASK_REQUEST,
   UPDATE_TASK_SUCCESS,
@@ -22,6 +24,8 @@ export const createTaskReducer = (state = {}, action: PayloadAction<any>): TaskS
       return { loading: false, task: action.payload };
     case CREATE_TASK_FAIL:
       return { loading: false, error: action.payload };
+    case RESET_TASK:
+      return { task: null, error: null }
     default:
       return state;
   }
@@ -49,7 +53,7 @@ export const updateTaskReducer = (state = {}, action: PayloadAction<any>): TaskS
     case UPDATE_TASK_REQUEST:
       return { done: false };
     case UPDATE_TASK_SUCCESS:
-      return { loading: false, done: true };
+      return { done: true };
     case UPDATE_TASK_FAIL:
       return { done: false, error: action.payload };
     default:
@@ -65,6 +69,8 @@ export const deleteTaskReducer = (state = {}, action: PayloadAction<any>): TaskS
       return { success: true };
     case DELETE_TASK_FAIL:
       return { success: false, error: action.payload };
+    case DELETE_TASK_RESET:
+      return { success: false }
     default:
       return state;
   }
