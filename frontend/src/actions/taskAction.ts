@@ -10,6 +10,8 @@ import {
   DELETE_TASK_FAIL,
   DELETE_TASK_REQUEST,
   DELETE_TASK_SUCCESS,
+  DELETE_TASK_RESET,
+  RESET_TASK,
   UPDATE_TASK_FAIL,
   UPDATE_TASK_REQUEST,
   UPDATE_TASK_SUCCESS,
@@ -151,3 +153,11 @@ export const deleteTask = (id: number) => async (dispatch: AppDispatch, getState
     }
   }
 };
+
+export const resetTask = () => (dispatch: AppDispatch) => {
+  dispatch({ type: RESET_TASK })
+}
+
+export const deleteTaskReset = () => (dispatch: AppDispatch) => {
+  dispatch({ type: DELETE_TASK_RESET })
+}

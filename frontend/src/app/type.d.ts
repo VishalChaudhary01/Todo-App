@@ -27,12 +27,12 @@ interface UserState {
 }
 
 interface TaskState {
-  task?: {
+  task?: null | {
     [key: string]: any;
   };
   tasks?: any[];
   loading?: boolean;
-  error?: string;
+  error?: string | null;
   success?: boolean;
   done?: boolean;
 }
