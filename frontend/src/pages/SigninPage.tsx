@@ -34,12 +34,11 @@ export const SigninPage: React.FC = () => {
 
   React.useEffect(() => {
     if (userInfo) {
-      console.log(userInfo);
       navigate("/");
       enqueueSnackbar("Signin successfully", { variant: "success" });
     }
     if (error) {
-      navigate("/");
+      navigate("/signin");
       enqueueSnackbar(error, { variant: "error" });
     }
   }, [dispatch, userInfo, error]);
