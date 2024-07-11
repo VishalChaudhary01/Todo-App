@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link, useNavigate } from "react-router-dom"
 import { useSnackbar } from "notistack";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { signup } from "../actions/userAction"
+import { signup, resetUser } from "../actions/userAction"
 
 
 export const SignupPage: React.FC = () => {
@@ -44,8 +44,9 @@ export const SignupPage: React.FC = () => {
           }
           if (userInfo) {
                navigate('/');
-               enqueueSnackbar(userInfo.message, { variant: 'success' });
+               enqueueSnackbar("Signup successfully", { variant: 'success' });
           }
+          dispatch(resetUser())
      }, [dispatch, userInfo, error]);
      
      return(
@@ -94,7 +95,7 @@ export const SignupPage: React.FC = () => {
                <div className="py-2 text-center">
                    Already have an account?{" "}
                    <Link 
-                   to="/"
+                   to="/signin"
                    className="text-blue-500 hover:underline"
                    >
                     Sign in
