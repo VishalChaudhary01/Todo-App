@@ -1,13 +1,16 @@
+import * as React from 'react';
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signout } from "../actions/userAction";
 
-export const Header = () => {
+export const Header: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { userInfo } = useAppSelector((state) => state.userSignin);
 
   const handleLogout = () => {
     dispatch(signout());
+    navigate('/signin');
   };
 
   return (
@@ -26,7 +29,7 @@ export const Header = () => {
             </div>
           ) : (
             <div className="hidden md:flex space-x-6">
-              <Link to="/">Sign In</Link>
+              <Link to="/signin">Sign In</Link>
               <Link to="/signup">Sign Up</Link>
             </div>
           )}
