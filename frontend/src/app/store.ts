@@ -29,7 +29,7 @@ const middleware = [thunk];
 
 export type RootState = ReturnType<typeof reducer>
 
-export const makeStore = (prelodadState?: Partial<RootState>) => {
+export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
     reducer: reducer,
     middleware: getDefaultMiddleware => {
