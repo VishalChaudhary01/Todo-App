@@ -26,7 +26,7 @@ const signup = async (req: Request, res: Response) => {
                }
           })
           const token = jwt.sign({ id: user.id }, "Vishal");
-          res.status(201).json(token);
+          res.status(201).json({ token: token });
      } catch (error) {
           if (error instanceof z.ZodError) {
                return res.status(400).json(error.errors[0].message);
@@ -49,7 +49,7 @@ const signin = async (req: Request, res: Response) => {
           if (!matchPassword) return res.status(400).json({ message: "Invalid password" });
 
           const token = jwt.sign({ id: user.id }, "Vishal");
-          res.status(200).json(token);
+          res.status(200).json({ token: token });
      } catch (error) {
           if (error instanceof z.ZodError) {
                return res.status(400).json(error.errors[0].message);
