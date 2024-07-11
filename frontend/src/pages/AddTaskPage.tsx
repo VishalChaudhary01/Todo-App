@@ -2,7 +2,7 @@ import * as React from "react";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { createTask } from "../actions/taskAction";
+import { createTask, resetTask } from "../actions/taskAction";
 
 export const AddTaskPage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,6 +15,18 @@ export const AddTaskPage: React.FC = () => {
     title: "",
     description: "",
   });
+
+  React.useEffect(() => {
+    if (task) {
+      navigate("/");
+      enqueueSnackbar("Task added successfully", { variant: "success" });
+    }
+    if (error) {
+      console.log(error);
+      enqueueSnackbar(error, { variant: "error" });
+    }
+    dispatch(resetTask());
+  }, [dispatch, task, error])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputs({
@@ -29,19 +41,8 @@ export const AddTaskPage: React.FC = () => {
         title: inputs.title,
         description: inputs.description,
       };
-      dispatch(createTask(newTask));
+      dispatch(createTask(newTask)); 
   };
-
-  React.useEffect(() => {
-    if (task) {
-      navigate("/");
-      enqueueSnackbar("Task added successfully", { variant: "success" });
-    }
-    if (error) {
-      console.log(error);
-      enqueueSnackbar(error, { variant: "error" });
-    }
-  }, [dispatch, task, error])
 
   return (
     <div className="flex justify-center mt-4 px-4 w-100">
