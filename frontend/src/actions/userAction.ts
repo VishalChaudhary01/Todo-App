@@ -52,6 +52,10 @@ export const signout = () => (dispatch: AppDispatch) => {
   dispatch({ type: USER_SIGNOUT });
 };
 
+export const resetUser = () => (dispatch: AppDispatch) => {
+  dispatch({ type: USER_SIGNOUT })
+}
+
 export const signup = ({firstName, lastName, username, password}: UserSignup) => async (dispatch: AppDispatch) => {
     try {
       dispatch({
