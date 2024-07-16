@@ -19,11 +19,27 @@ const createTask = async (req: AuthRequest, res: Response) => {
           const validatedTask = taskSchema.parse(task);
           if (!req.id) return res.status(401).json({ message: "unauthorized" });
           task.userId = req.id;
+          const exitTask = await prisma.todo.findFirst({
+               where: {
+                    title: validatedTask.title,
+                    userId: req.id
+               }
+          })
+          if (exitTask) {
+               const updateTask = await prisma.todo.update({
+                    where: {
+                         id: exitTask.id,
+                         userId: req.id,
+                    },
+                    data: task
+               })
+               return res.status(200).json({ message: "Task Updated successfully", updateTask });
+          }
           const newTask = await prisma.todo.create({
                data: {
                     title: validatedTask.title,
                     description: validatedTask.description,
-                    userId: task.userId,
+                    userId: req.id,
                }
           })
           res.status(201).json({ message: "Task added successfully", newTask });
@@ -33,7 +49,7 @@ const createTask = async (req: AuthRequest, res: Response) => {
                return res.status(400).json(error.errors)
           }
           console.log(error);
-          res.status(500).json({ message: "Internal server error", error });
+          res.status(400).json({ message: "Something went wrong, Please try again", error });
      }
 }
 
@@ -64,7 +80,7 @@ const getAllTask = async (req: AuthRequest, res: Response) => {
           res.status(200).json(todos);
      } catch (error) {
           console.log(error);
-          res.status(500).json(error);
+          res.status(400).json(error);
      }
 }
 
@@ -79,7 +95,7 @@ const getTaskById = async (req: AuthRequest, res: Response) => {
           res.status(200).json(task);
      } catch (error) {
           console.log(error);
-          res.status(500).json(error);
+          res.status(400).json(error);
      }
 }
 
