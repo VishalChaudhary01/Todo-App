@@ -10,6 +10,7 @@ This is a simple todo-list application where a user can create their account and
  - User can see their all existing todos
 
 **Tech Stacks used:**
+
 **1. For Frontend:**
 
  - ReactJs
