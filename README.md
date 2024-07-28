@@ -1,3 +1,11 @@
+## CODTECH-Task1:
+Name: VISHAL CHAUDHARY
+Company: CODTECH IT SOLUTIONS
+ID: CT6WDS432
+Domain: WEB DEVELOPMENT
+Duration: 15th JUNE to 30th JULY
+
+
 ## Todo App
 
 This is a simple todo-list application where a user can create their account and then they can add, remove or mark as done their task-
@@ -13,7 +21,7 @@ This is a simple todo-list application where a user can create their account and
 
 **1. For Frontend:**
 
- - ReactJs
+ - ReactJs- 
  - Tailwind CSS
  - Redux
  
