@@ -36,3 +36,7 @@ This is a simple todo-list application where a user can create their account and
  - ExpressJs
  - TypeScriptJs
  - zod- for data validation
+![Screenshot 2024-07-28 233744](https://github.com/user-attachments/assets/040ccd06-f57f-4b21-b0b2-390865e337da)
+![Screenshot 2024-07-28 233801](https://github.com/user-attachments/assets/891904fe-14d4-4905-927c-06b975e5cc94)
+![Screenshot 2024-07-28 233821](https://github.com/user-attachments/assets/4c0e0fda-cb8e-4328-b097-5a10ed681a0b)
+![Screenshot 2024-07-28 233955](https://github.com/user-attachments/assets/6a14d1b8-c9dd-492d-8e3e-1afd11d9ec10)
