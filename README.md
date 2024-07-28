@@ -1,9 +1,13 @@
 ## CODTECH-Task1
 
 Name: VISHAL CHAUDHARY
+
 Company: CODTECH IT SOLUTIONS
+
 ID: CT6WDS432
+
 Domain: WEB DEVELOPMENT
+
 Duration: 15th JUNE to 30th JULY
 
 
