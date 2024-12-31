@@ -1,47 +1,26 @@
-import { Request, Response } from "express";
-import { prisma } from "../index";
-import { taskSchema } from "../types/taskSchema";
+import { Response } from "express";
+import { taskSchema, TaskSchemaType } from "../types/taskType";
 import { z } from "zod";
+import { Task } from "../models/Task";
+import { AuthRequest } from "../middlewares/auth";
 
-interface AuthRequest extends Request {
-     id?: number
-}
-
-interface Task {
-     title: string;
-     description: string;
-     done: boolean,
-     userId: number;
-}
 const createTask = async (req: AuthRequest, res: Response) => {
-     const task: Task = req.body;
+     const task: TaskSchemaType = req.body;
      try {
-          const validatedTask = taskSchema.parse(task);
-          if (!req.id) return res.status(401).json({ message: "unauthorized" });
+          if (!req.id) return res.status(401).json({ message: "Unauthorized" });
           task.userId = req.id;
-          const exitTask = await prisma.todo.findFirst({
-               where: {
-                    title: validatedTask.title,
-                    userId: req.id
-               }
-          })
-          if (exitTask) {
-               const updateTask = await prisma.todo.update({
-                    where: {
-                         id: exitTask.id,
-                         userId: req.id,
-                    },
-                    data: task
-               })
-               return res.status(200).json({ message: "Task Updated successfully", updateTask });
-          }
-          const newTask = await prisma.todo.create({
-               data: {
-                    title: validatedTask.title,
-                    description: validatedTask.description,
-                    userId: req.id,
-               }
-          })
+          const validatedTask = taskSchema.parse(task);
+          const exitTask = await Task.findOne({
+               title: validatedTask.title,
+               userId: validatedTask.userId,
+          });
+          if (exitTask) return res.status(400).json({ message: "Task is already listed" });
+          const newTask = await Task.create({
+               title: validatedTask.title,
+               description: validatedTask.description,
+               userId: req.id,
+          });
+          console.log("new task::", newTask)
           res.status(201).json({ message: "Task added successfully", newTask });
      } catch (error) {
           if (error instanceof z.ZodError) {
@@ -54,15 +33,14 @@ const createTask = async (req: AuthRequest, res: Response) => {
 }
 
 const deleteTask = async (req: AuthRequest, res: Response) => {
-     const id = parseInt(req.params.id);
+     const id = req.params.id;
      try {
-          const deletedTask = await prisma.todo.delete({
-               where: {
-                    id: id,
-                    userId: req.id
-               }
+          if (!req.id) return res.status(401).json({ message: "Unauthorized" });
+          const deletedTask = await Task.findOneAndDelete({
+               _id: id,
+               userId: req.id
           });
-          console.log(deletedTask)
+          if (!deletedTask) return res.status(404).json({ message: "Task not found"})
           res.status(200).json({ message: "Task deleted successfully" });
      } catch (error) {
           console.log(error);
@@ -72,11 +50,8 @@ const deleteTask = async (req: AuthRequest, res: Response) => {
 
 const getAllTask = async (req: AuthRequest, res: Response) => {
      try {
-          const todos = await prisma.todo.findMany({
-               where: {
-                    userId: req.id
-               }
-          })
+          if (!req.id) return res.status(401).json({ message: "Unauthorized" });
+          const todos = await Task.find({ userId: req.id });
           res.status(200).json(todos);
      } catch (error) {
           console.log(error);
@@ -85,13 +60,14 @@ const getAllTask = async (req: AuthRequest, res: Response) => {
 }
 
 const getTaskById = async (req: AuthRequest, res: Response) => {
+     const id = req.params.id;
      try {
-          const task = await prisma.todo.findFirst({
-               where: {
-                    id: parseInt(req.params.id),
-                    userId: req.id
-               }
-          })
+          if (!req.id) return res.status(401).json({ message: "Unauthorized" });
+          const task = await Task.findOne({
+               _id: id,
+               userId: req.id
+          });
+          if (!task) return res.status(404).json({ message: "Task not found" });
           res.status(200).json(task);
      } catch (error) {
           console.log(error);
@@ -100,22 +76,21 @@ const getTaskById = async (req: AuthRequest, res: Response) => {
 }
 
 const updateTask = async (req: AuthRequest, res: Response) => {
-     const taskData: Task = req.body;
+     const id = req.params.id;
+     const taskData: Partial<TaskSchemaType> = req.body;
      try {
-          const updatedTask = await prisma.todo.update({
-               where: {
-                    id: parseInt(req.params.id),
-                    userId: req.id,
-               },
-               data: taskData
-          })
+          if (!req.id) return res.status(401).json({ message: "Unauthorized" });
+          const updatedTask = await Task.findOneAndUpdate(
+               { _id: id, userId: req.id },
+               taskData,
+               { new: true, runValidators: true },
+          );
+          if (!updatedTask) return res.status(404).json({ message: "Task not found"});
           res.status(200).json({ message: "Task Updated successfully", updatedTask });
      } catch (error) {
           console.log(error);
           res.status(400).json(error);
      }
 }
-
-
 
 export { createTask, deleteTask, getAllTask, getTaskById, updateTask }

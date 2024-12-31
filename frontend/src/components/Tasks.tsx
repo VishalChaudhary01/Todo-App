@@ -32,13 +32,15 @@ const Tasks: React.FC = () => {
     }
   }, [])
 
-  const handleDeleteTask = (id: number) => {
+  const handleDeleteTask = (id: string) => {
     dispatch(deleteTask(id))    
   }
 
-  const handleUpdateTask = (id: number) => {
+  const handleUpdateTask = (id: string) => {
+    console.log("id of task:: ", id)
     dispatch(updateTask(true, id))
   }
+  console.log("tasks::", tasks)
 
   return (
     <>
@@ -46,7 +48,7 @@ const Tasks: React.FC = () => {
           <h2 className="text-4xl font-bold text-center py-3">Tasks loading...</h2>
         ) : (
           tasks?.map((task) => (
-            <SingleTask key={task.id} {...task} handleDeleteTask={handleDeleteTask} handleUpdateTask={handleUpdateTask}/>
+            <SingleTask key={task._id} {...task} handleDeleteTask={handleDeleteTask} handleUpdateTask={handleUpdateTask}/>
           ))
         )}
     </>    

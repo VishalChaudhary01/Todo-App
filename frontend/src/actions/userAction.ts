@@ -10,8 +10,7 @@ import {
   USER_SIGNUP_SUCCESS,
 } from "../constants/userConstants";
 
-
-export const signin = ({ username, password }: UserSignin) => async (dispatch: AppDispatch) => {
+export const signin = ({ email, password }: UserSignin) => async (dispatch: AppDispatch) => {
     try {
       dispatch({
         type: USER_SIGNIN_REQUEST,
@@ -23,7 +22,7 @@ export const signin = ({ username, password }: UserSignin) => async (dispatch: A
       };
       const { data } = await axios.post(
         "http://localhost:5000/api/user/signin",
-        { username, password },
+        { email, password },
         config
       );
       dispatch({
@@ -56,7 +55,7 @@ export const resetUser = () => (dispatch: AppDispatch) => {
   dispatch({ type: USER_SIGNOUT })
 }
 
-export const signup = ({firstName, lastName, username, password}: UserSignup) => async (dispatch: AppDispatch) => {
+export const signup = ({name, email, password}: UserSignup) => async (dispatch: AppDispatch) => {
     try {
       dispatch({
         type: USER_SIGNUP_REQUEST,
@@ -68,7 +67,7 @@ export const signup = ({firstName, lastName, username, password}: UserSignup) =>
       };
       const { data } = await axios.post(
         "http://localhost:5000/api/user/signup",
-        { firstName, lastName, username, password },
+        { name, email, password },
         config
       );
       dispatch({
@@ -90,4 +89,3 @@ export const signup = ({firstName, lastName, username, password}: UserSignup) =>
       }
     }
 };
-

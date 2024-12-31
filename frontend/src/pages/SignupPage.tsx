@@ -4,7 +4,6 @@ import { useSnackbar } from "notistack";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { signup, resetUser } from "../actions/userAction"
 
-
 export const SignupPage: React.FC = () => {
      const dispatch = useAppDispatch();
      const navigate = useNavigate();
@@ -12,9 +11,8 @@ export const SignupPage: React.FC = () => {
      const { userInfo, error } = useAppSelector((state) => state.userSignup);
 
      const [inputs, setInputs] = React.useState<UserSignup>({
-          firstName: "",
-          lastName: "",
-          username: "",
+          name: "",
+          email: "",
           password: "",
      });
 
@@ -25,16 +23,9 @@ export const SignupPage: React.FC = () => {
           })
      };
 
-     const newUser = {
-          firstName: inputs.firstName,
-          lastName: inputs.lastName,
-          username: inputs.username,
-          password: inputs.password,
-     }
-
      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
-          dispatch(signup(newUser));
+          dispatch(signup({ name: inputs.name, email: inputs.email, password: inputs.password }));
      }
 
      React.useEffect(() => {
@@ -56,30 +47,22 @@ export const SignupPage: React.FC = () => {
                <form onSubmit={handleSubmit} className="max-w-md flex flex-col gap-4">
                    <input
                     type="text"
-                    name="firstName"
+                    name="name"
                     placeholder="First Name"
                     onChange={handleChange}
-                    value={inputs.firstName}
-                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-green-500"
-                    />
-                    <input
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    onChange={handleChange}
-                    value={inputs.lastName}
+                    value={inputs.name}
                     className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-green-500"
                     />
                     <input
                     type="email"
-                    name="username"
+                    name="email"
                     placeholder="Email"
                     onChange={handleChange}
-                    value={inputs.username}
+                    value={inputs.email}
                     className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-green-500"
                     />
                     <input
-                    type="text"
+                    type="password"
                     name="password"
                     placeholder="password"
                     onChange={handleChange}
@@ -89,7 +72,7 @@ export const SignupPage: React.FC = () => {
                     <button
                     type="submit"
                     className="mt-3 w-full text-black bg-green-400 focus:ring-400 font-medium rounded-lg text-sm px-4 py-2">
-                         Sign in
+                         Sign up
                     </button>
                </form>
                <div className="py-2 text-center">

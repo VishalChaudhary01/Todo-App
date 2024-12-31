@@ -1,12 +1,11 @@
 interface UserSignup {
-  username: string;
-  firstName: string;
-  lastName?: string;
+  name: string;
+  email: string;
   password: string;
 }
 
 interface UserSignin {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -38,10 +37,10 @@ interface TaskState {
 }
 
 interface TaskProps {
-  id: number;
+  _id: string;
   title: string;
-  description: string;
+  description?: string;
   done?: boolean;
-  handleDeleteTask: (id: number) => void;
-  handleUpdateTask: (id: number) => void;
+  handleDeleteTask: (id: string) => void;
+  handleUpdateTask: (id: string) => void;
 }

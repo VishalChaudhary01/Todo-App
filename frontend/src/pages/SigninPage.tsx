@@ -11,7 +11,7 @@ export const SigninPage: React.FC = () => {
   const { userInfo, error } = useAppSelector((state) => state.userSignin);
 
   const [inputs, setInputs] = React.useState<UserSignin>({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -23,7 +23,7 @@ export const SigninPage: React.FC = () => {
   };
 
   const user = {
-    username: inputs.username,
+    email: inputs.email,
     password: inputs.password,
   };
 
@@ -50,14 +50,14 @@ export const SigninPage: React.FC = () => {
         <form onSubmit={handleSubmit} className="max-w-md flex flex-col gap-4">
           <input
             type="email"
-            name="username"
+            name="email"
             placeholder="Email"
             onChange={handleChange}
-            value={inputs.username}
+            value={inputs.email}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-green-500"
           />
           <input
-            type="text"
+            type="password"
             name="password"
             placeholder="password"
             onChange={handleChange}

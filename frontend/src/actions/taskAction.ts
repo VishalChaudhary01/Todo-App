@@ -54,7 +54,7 @@ export const createTask = ({ title, description }: Task) => async (dispatch: App
     }
   };
 
-export const updateTask = (done: boolean, id: number) => async (dispatch: AppDispatch, getState: () => RootState) => {
+export const updateTask = (done: boolean, id: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       dispatch({
         type: UPDATE_TASK_REQUEST,
@@ -121,7 +121,7 @@ export const allTask = () => async (dispatch: AppDispatch, getState: () => RootS
   }
 };
 
-export const deleteTask = (id: number) => async (dispatch: AppDispatch, getState: () => RootState) => {
+export const deleteTask = (id: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
   try {
     dispatch({
       type: DELETE_TASK_REQUEST,

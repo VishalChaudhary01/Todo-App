@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { red } from "@mui/material/colors";
 
 export const SingleTask: React.FC<TaskProps> = ({
-  id,
+  _id,
   title,
   description,
   done,
@@ -20,10 +20,10 @@ export const SingleTask: React.FC<TaskProps> = ({
               <h4>{description}</h4>
             </div>
             <div>
-              <button onClick={() => handleUpdateTask(id)} className="mx-2">
+              <button onClick={() => handleUpdateTask(_id)} className="mx-2">
                 <TaskAltIcon color="success" />
               </button>
-              <button onClick={() => handleDeleteTask(id)} className="mx-2">
+              <button onClick={() => handleDeleteTask(_id)} className="mx-2">
                 <DeleteIcon sx={{ color: red[600] }} />
               </button>
             </div>
